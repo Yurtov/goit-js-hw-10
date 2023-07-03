@@ -6,14 +6,16 @@ import SlimSelect from 'slim-select';
 // new SlimSelect({
 //   select: '.breed-select'
 // })
+let breeds = [];
 
-refs.cardSelectorEl.addEventListener('change', onOpenBreed());
+refs.cardSelectorEl.addEventListener('change', onOpenBreed);
 
-createOptins();
-
-function createOptins() {
+function createOptions() {
   API.fetchBreeds()
-    .then(getIdList)
+    .then(data => {
+      breeds = data;
+      getIdList(data);
+    })
     .catch(error => console.error(error));
 }
 
@@ -29,29 +31,35 @@ function getIdList(array) {
   }
 }
 
+createOptions();
 
 function onOpenBreed() {
-   
   const breedId = refs.cardSelectorEl.value;
-  console.log(breedId);
-
 
   API.fetchCatByBreed(breedId)
-    .then(createMarkUp)
+    .then(data => {
+      refs.cardCatContainerEl.innerHTML = createMarkup(data, breedId);
+    })
     .catch(error => console.error(error));
 }
 
-function createMarkUp(array) {
-  let urlImg = array.map(link => link.url);
-  let catName = array.map(name => name);
+function findBreedsId(id) {
+  return breeds.find(breed => breed.id === id);
+}
 
-  const markUp = `
-  <img class="img-cat" src="" width="440" height="400" loading="lazy">
-  <div>
-    <h2></h2>
-    <p class="cat-info"></p>
-    <p class="cat-info">Temperament: </p>
-  </div>
-`;
-  refs.cardCatContainerEl.insertAdjacentHTML('beforeend', markUp);
+function createMarkup(data, breedId) {
+  const cat = data[0];
+  const breed = findBreedsId(breedId);
+  return `
+      <div class="cat-info-container">
+        <div class="cat-text">
+          <h2>${breed.name}</h2>
+          <p>${breed.temperament}</p>
+          <p>${breed.description}</p>
+        </div>
+        <div class="cat-image">
+          <img src="${cat.url}" alt="${breed.name} width="440" height="400" loading="lazy"">
+        </div>
+      </div>
+    `;
 }

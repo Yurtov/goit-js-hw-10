@@ -1,0 +1,2 @@
+.loader,.loader:before,.loader:after{width:2.5em;height:2.5em;border-radius:50%;animation:bblFadInOut 1.8s ease-in-out infinite}.loader{color:#000;text-indent:-9999em;font-size:7px;animation-delay:-.16s;position:relative;transform:translateZ(0)}.loader:before,.loader:after{content:"";position:absolute;top:0}.loader:before{animation-delay:-.32s;left:-3.5em}.loader:after{left:3.5em}@keyframes bblFadInOut{0%,80%,to{box-shadow:0 2.5em 0 -1.3em}40%{box-shadow:0 2.5em}}
+/*# sourceMappingURL=index.bf518645.css.map */

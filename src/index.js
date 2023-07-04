@@ -1,16 +1,17 @@
+import SlimSelect from 'slim-select';
 import './css/styles.css';
 import { refs } from './js/refs';
-import SlimSelect from 'slim-select';
 import API from './js/cat-api';
 import Notiflix from 'notiflix';
 
-new SlimSelect({
-  select: '.breed-select',
-});
-
 let breeds = [];
 
+let slimSelect = new SlimSelect({
+      select: '.breed-select',
+    })
+
 refs.cardSelectorEl.style.display = 'none';
+
 
 refs.cardSelectorEl.addEventListener('change', onOpenBreed);
 
@@ -19,7 +20,11 @@ function createOptions() {
     .then(data => {
       refs.loaderEl.style.display = 'none';
       breeds = data;
-      getIdList(data);
+      createBreedsMarkup(data)
+      // getIdList(data);
+      // new SlimSelect({
+      //     select: '.breed-select',
+      //   })
     })
     .catch(error => {
       if (error) {
@@ -30,17 +35,27 @@ function createOptions() {
     .finally((refs.loaderEl.style.display = 'none'));
 }
 
-function getIdList(array) {
-  for (let i = 0; i < array.length; i += 1) {
-    let value = array[i].id;
-    let text = array[i].name;
+// function getIdList(array) {
+//   for (let i = 0; i < array.length; i += 1) {
+//     let value = array[i].id;
+//     let text = array[i].name;
 
-    const optionsElement = document.createElement('option');
-    optionsElement.value = value;
-    optionsElement.textContent = text;
-    refs.cardSelectorEl.appendChild(optionsElement);
-  }
-}
+//     const optionsElement = document.createElement('option');
+//     optionsElement.value = value;
+//     optionsElement.textContent = text;
+//     refs.cardSelectorEl.appendChild(optionsElement);
+//   }
+
+// }
+
+function createBreedsMarkup(items) {
+  slimSelect.setData(
+    [{ text: '', value: '' }].concat(
+      items.map(item => {
+        return { text: item.name, value: item.id };
+      })
+    )
+  );}
 
 createOptions();
 

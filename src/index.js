@@ -21,7 +21,7 @@ function createOptions() {
       refs.loaderEl.style.display = 'none';
       breeds = data;
       // createBreedsMarkup(data)
-      getIdList(data);
+      refs.cardSelectorEl.appendChild(getIdList(data));
       new SlimSelect({
           select: '.breed-select',
         })
@@ -36,15 +36,17 @@ function createOptions() {
 }
 
 function getIdList(array) {
+  const optionsElement = document.createElement('option');
     for (let i = 0; i < array.length; i += 1) {
     let value = array[i].id;
     let text = array[i].name;
 
-    const optionsElement = document.createElement('option');
     optionsElement.value = value;
     optionsElement.textContent = text;
-    refs.cardSelectorEl.appendChild(optionsElement);
+
+    // refs.cardSelectorEl.appendChild(optionsElement);
   }
+  return optionsElement
 
 }
 

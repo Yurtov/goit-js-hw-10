@@ -14,8 +14,7 @@ function fetchBreeds() {
         'Oops! Something went wrong! Try reloading the page!'
       );
     }
-    refs.cardSelectorEl.style.display = 'block';
-    // refs.loaderEl.style.display = 'none';
+    // refs.loaderEl.style.display = 'block';
     return response.json();
   });
 }

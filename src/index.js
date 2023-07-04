@@ -10,14 +10,14 @@ let breeds = [];
 //       select: '.breed-select',
 //     })
 
-refs.cardSelectorEl.style.display = 'none';
+// refs.cardSelectorEl.style.display = 'none';
 
 refs.cardSelectorEl.addEventListener('change', onOpenBreed);
 
 function createOptions() {
   API.fetchBreeds()
     .then(data => {
-      refs.loaderEl.style.display = 'none';
+      // refs.loaderEl.style.display = 'none';
       breeds = data;
       // createBreedsMarkup(data)
       getIdList(data);
@@ -32,19 +32,25 @@ function createOptions() {
         refs.loaderEl.style.display = 'none';
       }
     })
-    .finally((refs.loaderEl.style.display = 'none'));
 }
 
-function getIdList(array) {
-  for (let i = 0; i < array.length; i += 1) {
-    let value = array[i].id;
-    let text = array[i].name;
-    const optionsElement = document.createElement('option');
-    optionsElement.value = value;
-    optionsElement.textContent = text;
+// function getIdList(array) {
+//   for (let i = 0; i < array.length; i += 1) {
+//     let value = array[i].id;
+//     let text = array[i].name;
+//     const optionsElement = document.createElement('option');
+//     optionsElement.value = value;
+//     optionsElement.textContent = text;
 
-    refs.cardSelectorEl.appendChild(optionsElement);
-  }
+//     refs.cardSelectorEl.appendChild(optionsElement);
+//   }
+// }
+
+function getIdList(data) {
+  const markupOptions = data
+    .map(({ id, name }) => `<option value="${id}">${name}</option>`)
+    .join('');
+  refs.cardSelectorEl.innerHTML = markupOptions;
 }
 
 // function createBreedsMarkup(items) {

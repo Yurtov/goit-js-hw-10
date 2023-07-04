@@ -1,3 +1,5 @@
+@import './slimselect.css';
+
 .loader, .loader:before, .loader:after {
 	border-radius: 50%;
 	width: 2.5em;
@@ -32,4 +34,14 @@
 	40% { box-shadow: 0 2.5em 0 0 }
   }
 
- 	  
+  /* cat-container
+  cat-img
+  cat-info
+  cat-name
+  cat-temp
+  cat-dscr */
+ .cat-container{
+	margin-top: 40px;
+	display: flex;
+	gap: 20px;
+ }	  

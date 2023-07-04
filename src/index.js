@@ -17,16 +17,17 @@ refs.cardSelectorEl.addEventListener('change', onOpenBreed);
 function createOptions() {
   API.fetchBreeds()
     .then(data => {
-      refs.loaderTextEl.style.display = 'none';
+      refs.loaderEl.style.display = 'none';
       breeds = data;
       getIdList(data);
     })
     .catch(error => {
-      Notiflix.Report.failure(
-        'Oops! Something went wrong! Try reloading the page!'
-      );
+      if (error) {
+        showError();
+        refs.loaderEl.style.display = 'none';
+      }
     })
-    .finally((refs.loaderTextEl.style.display = 'none'));
+    .finally((refs.loaderEl.style.display = 'none'));
 }
 
 function getIdList(array) {
@@ -45,7 +46,7 @@ createOptions();
 
 function onOpenBreed() {
   const breedId = refs.cardSelectorEl.value;
-  refs.loaderTextEl.style.display = 'block';
+  refs.loaderEl.style.display = 'block';
 
   if (!breedId) {
     return;
@@ -53,14 +54,13 @@ function onOpenBreed() {
 
   API.fetchCatByBreed(breedId)
     .then(data => {
-      refs.loaderTextEl.style.display = 'none';
+      refs.loaderEl.style.display = 'none';
       refs.cardCatContainerEl.innerHTML = createMarkup(data, breedId);
       document.body.style.backgroundColor = getRandomHexColor();
     })
     .catch(error => {
       showError();
-      refs.loaderTextEl.style.display = 'none';
-     
+      refs.loaderEl.style.display = 'none';
     });
 }
 
@@ -76,7 +76,7 @@ function createMarkup(data, breedId) {
        <img class="cat-img" src="${cat.url}" alt="${breed.name} width="440" height="400" loading="lazy"">
         <div class="cat-info">
           <h2 class="cat-name">${breed.name}</h2>
-          <p class="cat-temp">${breed.temperament}</p>
+          <p class="cat-temp"><b>Temperaments:</b> ${breed.temperament}</p>
           <p class="cat-dscr">${breed.description}</p>
         </div>
       </div>

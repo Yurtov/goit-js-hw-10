@@ -12,7 +12,6 @@ let breeds = [];
 
 refs.cardSelectorEl.style.display = 'none';
 
-
 refs.cardSelectorEl.addEventListener('change', onOpenBreed);
 
 function createOptions() {
@@ -21,10 +20,11 @@ function createOptions() {
       refs.loaderEl.style.display = 'none';
       breeds = data;
       // createBreedsMarkup(data)
-      refs.cardSelectorEl.appendChild(getIdList(data));
+      getIdList(data);
+
       new SlimSelect({
-          select: '.breed-select',
-        })
+        select: '.breed-select',
+      });
     })
     .catch(error => {
       if (error) {
@@ -36,18 +36,15 @@ function createOptions() {
 }
 
 function getIdList(array) {
-  const optionsElement = document.createElement('option');
-    for (let i = 0; i < array.length; i += 1) {
+  for (let i = 0; i < array.length; i += 1) {
     let value = array[i].id;
     let text = array[i].name;
-
+    const optionsElement = document.createElement('option');
     optionsElement.value = value;
     optionsElement.textContent = text;
 
-    // refs.cardSelectorEl.appendChild(optionsElement);
+    refs.cardSelectorEl.appendChild(optionsElement);
   }
-  return optionsElement
-
 }
 
 // function createBreedsMarkup(items) {
